@@ -10,6 +10,8 @@ html(lang="jp")
   body.container
     div.my-3
       a(href="/logout").btn.btn-info.float-right ログアウト
+      div.form-group
+        a(href="/badReports").btn.btn-danger.float-right 違反
       a(href="/profile") プロフィール
       h1 秘密の匿名掲示板
     h2 新規投稿
@@ -45,6 +47,13 @@ html(lang="jp")
                 input(type="hidden" name="id" value=post.id)
                 input(type="hidden" name="oneTimeToken" value=oneTimeToken)
                 button(type="submit").btn.btn-danger.float-right 削除
+            - var isBadreport = (user !== 'admin')
+            if isBadreport
+              form(method="post" action="/badReports")
+                input(type="hidden" name="postId" value=post.id)
+                input(type="hidden" name="reportedBy" value=user)
+                input(type="hidden" name="oneTimeToken" value=oneTimeToken)
+                button(type="submit").btn.btn-danger.float-right 違反
     script(src="https://code.jquery.com/jquery-3.2.1.slim.min.js")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js",
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl",
